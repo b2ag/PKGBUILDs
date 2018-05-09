@@ -4,7 +4,7 @@
 buildarch=4
 
 pkgname=uboot-beaglebone
-pkgver=2017.07
+pkgver=2018.05
 pkgrel=1
 pkgdesc="U-Boot for Beaglebone and Beaglebone Black"
 arch=('armv7h')
@@ -14,17 +14,15 @@ license=('GPL')
 install=${pkgname}.install
 backup=('boot/boot.txt' 'boot/boot.scr')
 source=("ftp://ftp.denx.de/pub/u-boot/u-boot-${pkgver/rc/-rc}.tar.bz2"
-        '0001-arch-linux-arm-modifications.patch'
         'boot.txt'
         'mkscr')
-md5sums=('b74741e7a9ad1cf9a5bfa87302b80f2b'
-         'a0bc17acb85fc3f04f74f6a87453ac97'
+md5sums=('SKIP'
          'd9fd8313c6e8b6d217676a69c3813a95'
          '021623a04afd29ac3f368977140cfbfd')
 
 prepare() {
   cd u-boot-${pkgver/rc/-rc}
-  git apply ../0001-arch-linux-arm-modifications.patch
+  #git apply ../0001-arch-linux-arm-modifications.patch
 }
 
 build() {
@@ -32,7 +30,7 @@ build() {
 
   unset CFLAGS CXXFLAGS LDFLAGS
 
-  make distclean 
+  make distclean
   make am335x_boneblack_defconfig
   echo 'CONFIG_IDENT_STRING=" Arch Linux ARM"' >> .config
   make EXTRAVERSION=-${pkgrel}
